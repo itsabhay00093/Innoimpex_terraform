@@ -11,11 +11,12 @@ resource "aws_autoscaling_group" "this" {
   target_group_arns         = var.target_group_arns
   health_check_type         = var.health_check_type
   health_check_grace_period = var.health_check_grace_period
-  tags = [
-    for key, value in var.tags : {
-      key                 = key
-      value               = value
-      propagate_at_launch = true
-    }
-  ]
+  dynamic "tag" {
+  for_each = var.tags
+  content {
+    key                 = tag.key
+    value               = tag.value
+    propagate_at_launch = true
+  }
 }
+} 

@@ -1,10 +1,10 @@
-region                    = "us-east-1"
-vpc_id                    = "vpc-12345678"
-subnet_ids                = ["subnet-aaa", "subnet-bbb"]
+region     = "ap-south-1"
+vpc_id     = "vpc-0ae75acd847e1d688"
+subnet_ids = ["subnet-0afb8446ca7943880", "subnet-07877e9f6cf1379a9"]
 
 tags = {
   Environment = "dev"
-  Project     = "asg-module-demo"
+  Project     = "module-demo"
 }
 
 # Security Group
@@ -21,17 +21,17 @@ sg_egress_rules = [
 ]
 
 # Launch Template
-lt_name_prefix        = "web-lt-"
-ami_id                = "ami-0c02fb55956c7d316"
-instance_type         = "t2.micro"
-key_name              = "my-keypair"
-associate_public_ip   = true
+lt_name_prefix      = "we-lt-"
+ami_id              = "ami-0a1235697f4afa8a4"
+instance_type       = "t3.small"
+key_name            = "abhay"
+associate_public_ip = true
 
 # ASG
-asg_name                   = "web-asg"
-asg_max_size               = 3
-asg_min_size               = 1
-asg_desired_capacity       = 2
-target_group_arns          = []
-health_check_type          = "EC2"
-health_check_grace_period  = 300
+asg_name                  = "web-test"
+asg_max_size              = 3
+asg_min_size              = 1
+asg_desired_capacity      = 1
+target_group_arns         = []
+health_check_type         = "EC2"
+health_check_grace_period = 300

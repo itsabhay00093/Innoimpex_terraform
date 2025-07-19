@@ -1,26 +1,30 @@
 provider "aws" {
-  region = var.region
+  region  = var.region
+  profile = "innoimpex"
 }
 
 module "sg" {
-  source         = "./modules/security_group"
-  name           = var.sg_name
-  description    = var.sg_description
-  vpc_id         = var.vpc_id
-  ingress_rules  = var.sg_ingress_rules
-  egress_rules   = var.sg_egress_rules
-  tags           = var.tags
+  source        = "./modules/security_group"
+  name          = var.sg_name
+  description   = var.sg_description
+  vpc_id        = var.vpc_id
+  ingress_rules = var.sg_ingress_rules
+  egress_rules  = var.sg_egress_rules
+  tags          = var.tags
 }
 
+output "sg_id" {
+  value = module.sg.security_group_id
+}
 module "lt" {
-  source               = "./modules/launch_template"
-  name_prefix          = var.lt_name_prefix
-  image_id             = var.ami_id
-  instance_type        = var.instance_type
-  key_name             = var.key_name
-  associate_public_ip  = var.associate_public_ip
-  security_group_ids   = [module.sg.security_group_id]
-  tags                 = var.tags
+  source              = "./modules/launch_template"
+  name_prefix         = var.lt_name_prefix
+  image_id            = var.ami_id
+  instance_type       = var.instance_type
+  key_name            = var.key_name
+  associate_public_ip = var.associate_public_ip
+  security_group_ids  = [module.sg.security_group_id]
+  tags                = var.tags
 }
 
 module "asg" {
@@ -35,4 +39,7 @@ module "asg" {
   health_check_type         = var.health_check_type
   health_check_grace_period = var.health_check_grace_period
   tags                      = var.tags
+}
+output "asg_nm" {
+  value = module.asg.asg_name
 }
