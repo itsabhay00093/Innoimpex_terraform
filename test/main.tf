@@ -26,6 +26,12 @@ module "lt" {
   security_group_ids  = [module.sg.security_group_id]
   tags                = var.tags
 }
+output "launchid" {
+  value = module.lt.launch_template_id
+}
+output "launchnm" {
+  value = module.lt.launch_template_name
+}
 
 module "asg" {
   source                    = "./modules/asg"
